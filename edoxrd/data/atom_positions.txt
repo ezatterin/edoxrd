@@ -1,0 +1,62 @@
+	# Fractional atomic coordinates for the materials as described.
+# The columns are the x, y, z positions; the rows refer to the ABO3
+# atoms building up the perovskite structure as indicated.
+
+# Substrate(STO)
+0 0 0            # A = Sr
+0.5 0.5 0.5      # B = Ti
+0.5 0.5 0        # O1
+0 0.5 0.5        # O2
+0.5 0 0.5        # O3
+# SROb
+0 0 0
+0.5 0.5 0.5
+0.5 0.5 0
+0 0.5 0.5
+0.5 0 0.5
+# STO
+0 0 0
+0.5 0.5 0.5
+0.5 0.5 0
+0 0.5 0.5
+0.5 0 0.5
+# PTO
+0 0 0
+0.5 0.5 0.5
+0.5 0.5 0
+0 0.5 0.5
+0.5 0 0.5
+# MTO
+0 0 0 
+0.5 0.5 0.5
+0.5 0.5 0
+0 0.5 0.5
+0.5 0 0.5
+# SROt 
+0 0 0 
+0.5 0.5 0.5
+0.5 0.5 0
+0 0.5 0.5
+0.5 0 0.5
+# KTO
+0 0 0
+0.5 0.5 0.5
+0.5 0.5 0
+0 0.5 0.5
+0.5 0 0.5
+# MO
+#0 0 0    # Mg
+#0 0.5 0.5
+#0.5 0 0.5
+#0.5 0.5 0
+#0.5 0 0  # O
+#0 0.5 0
+#0 0 0.5
+#0.5 0.5 0.5
+# DSO
+0 0 0
+0.5 0.5 0.5
+0.5 0.5 0
+0 0.5 0.5
+0.5 0 0.5
+
