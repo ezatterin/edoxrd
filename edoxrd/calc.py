@@ -89,7 +89,7 @@ def calc_thickness(fname, datadir, threshold=1e-4, distance=20, side='r',
 	"""
 
 	xpeaks, ypeaks = find_osc(fname, datadir, threshold=threshold,
-							  m_distance=distance, peak_side=side)
+							  m_distance=distance, peak_side=side, comm=comm)
 	x = np.asarray([x for x in range(len(xpeaks))]) # oscillation peak order
 	y = 4 * np.pi * np.sin(np.deg2rad(xpeaks/2)) / 0.15406 # q_m's
 	m, b = np.polyfit(x, y, 1) # linear fit
