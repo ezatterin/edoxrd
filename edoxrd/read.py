@@ -127,7 +127,9 @@ def read_rsm_data(fname, datadir, scale='log', coordinates='hkl'):
 	I[I<0] = 0.0 # avoid log scale from making negative intensities
 
 	if coordinates=='ttomega':
-		return twotheta, omega, I
+		xx, yy = np.meshgrid(twotheta, omega, indexing='ij')
+
+		return xx, yy, I
 
 	elif coordinates=='hkl':
 
