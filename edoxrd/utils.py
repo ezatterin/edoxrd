@@ -130,3 +130,47 @@ def find_osc(fname, d, threshold=0.000006, m_distance=10, peak_side='r',
 	else:
 	    xpeaks, ypeaks = xpeaks[xpeaks < xdata[idxs][film_peak]], ypeaks[xpeaks < xdata[idxs][film_peak]]
 	return xpeaks[0:12], ypeaks[0:12]
+
+def make_superlattice(m1, m2, Nm1, Nm2, MM, Ntot):
+
+	""" Function to make a superlattice. TODO! """
+
+	superlattice = np.zeros((Ntot,2)); #first column: m1, second column: m2
+
+	# Build up the superlattice. Array reflects its periodicity
+
+	if Nm2 > 0 and m2 > 0:
+		qm1 = Nm1
+		qm2 = Nm2
+		N = 1
+		while N < Ntot:
+			while qm1 >= 1:
+				if N < Ntot:
+					superlattice[N-1,0] = 1
+					superlattice[N-1,1] = 0
+					N = N + 1
+				qm1 = qm1 - 1
+			if N < Ntot:
+				superlattice[N-1,0] = qm1
+				superlattice[N-1,1] = 1 - qm1
+				qm2 = qm2 - superlattice[N,1]
+				N = N + 1
+			while qm2 >= 1:
+				if N < Ntot:
+					superlattice[N-1,0] = 0
+					superlattice[N-1,1] = 1
+					N = N + 1
+				qm2 = qm2 - 1
+			if N < Ntot:
+				superlattice[N-1,0] = 1 - qm2
+				superlattice[N-1,1] = qm2
+				qm1 = Nm1 - superlattice[N-1,0]
+				qm2 = Nm2
+				N = N + 1
+		superlattice[N-1,1] = qm2
+		if superlattice[N-1,1] == 0:
+			superlattice[N-1,1] = 1
+	else:
+		superlattice[:,0] = np.ones((Ntot,))
+
+	return superlattice
