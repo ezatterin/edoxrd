@@ -33,7 +33,7 @@ def plt_rsm(sub, film, d, normalisation='sub', scale='log', coordinates='hkl'):
 
     Returns
     -------
-    Plot.
+    Plot. Can be overridden.
 
     Example
     -------
@@ -57,11 +57,16 @@ def plt_rsm(sub, film, d, normalisation='sub', scale='log', coordinates='hkl'):
         plt.colorbar()
         plt.pcolormesh(H,L,I,vmin=i.min(),vmax=i.max())
 
-    plt.xlabel('H'); plt.ylabel('L')
+    if coordinates == 'ttomega':
+        plt.xlabel(r'$/omega$'); plt.ylabel(r'$2/theta')
+    elif coordinates == 'hkl':
+        plt.xlabel('H'); plt.ylabel('L')
 
 def plt_prof(sample, d, H, L, scale='log'):
 
-    """ TODO! """
+    """
+    Plots profile of an RSM plot. TODO!
+    """
 
     h,l,I = read_rsm_data(sample, d, scale=scale)
 
