@@ -85,7 +85,7 @@ def calc_ctr(fname, d, sub, film, Nfilm, c_film, Nelectrode_b=0, Nelectrode_t=0,
 		for l in range(0, int(Nsub)):
 			S[sub] += np.exp((t-l*c_sub) * (1j*q-(4*np.pi)/(mu*wave*q)))
 		for l in range(0, int(Nfilm)):
-		    S[film] += np.exp((t - (l*c_film + + Nsub*c_sub)) *
+		    S[film] += np.exp((t - (l*c_film + Nsub*c_sub)) *
 			(1j*q - (4*np.pi) / (mu*wave*q)))
 
 	# Top electrode

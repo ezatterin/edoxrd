@@ -49,13 +49,19 @@ def plt_rsm(sub, film, d, normalisation='sub', scale='log', coordinates='hkl'):
     # plot
     if normalisation == 'sub':
         plt.pcolormesh(h,l,i,vmin=I.min(),vmax=I.max())
-        plt.colorbar()
         plt.pcolormesh(H,L,I)
+        plt.axis([H[0].min(),H[:,0].max(),l[0].min(),L[:,0].max()])
+        plt.axes().set_aspect('equal')
+        plt.colorbar()
+
 
     elif normalisation == 'film':
         plt.pcolormesh(h,l,i)
-        plt.colorbar()
         plt.pcolormesh(H,L,I,vmin=i.min(),vmax=i.max())
+        plt.axis([H[0].min(),H[:,0].max(),l[0].min(),L[:,0].max()])
+        plt.axes().set_aspect('equal')
+        plt.colorbar()
+
 
     if coordinates == 'ttomega':
         plt.xlabel(r'$/omega$'); plt.ylabel(r'$2/theta')
