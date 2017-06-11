@@ -1,3 +1,4 @@
 .DS_Store
 .ipynb_checkpoints/
 edoxrd/*.pyc
+__pycache__
