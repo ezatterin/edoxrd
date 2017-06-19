@@ -2,3 +2,4 @@
 .ipynb_checkpoints/
 edoxrd/*.pyc
 __pycache__
+*.pyc
