@@ -34,7 +34,11 @@ def read_data(fname, datadir,comments='*'):
 	path = datadir + fname
 
 	# Read it into an array
-	data = np.genfromtxt(path, delimiter=" ", comments=comments)
+	try:
+		data = np.genfromtxt(path, delimiter=" ", comments='*')
+	except ValueError:
+		data = np.genfromtxt(path, delimiter=" ", comments='#')
+
 	xdata = data[:,0] # 2theta in degrees
 	ydata = data[:,1] # Intensity
 	offset = data[:,2] # Offset
