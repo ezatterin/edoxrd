@@ -139,6 +139,8 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 		qx = lambdaone * (np.cos(omrad) - np.cos(ttrad - omrad))
 		qy = lambdaone * (np.sin(omrad) + np.sin(ttrad - omrad))
 
+		return qx, qy, I
+
 	elif coordinates=='hkl':
 		# to radiants
 		ttrad = np.deg2rad(xx)
