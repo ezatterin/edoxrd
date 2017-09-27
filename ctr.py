@@ -4,7 +4,7 @@ from edoxrd.utils import asf, mat_dict, tt2q
 from edoxrd.read import read_data
 from edoxrd.calc import calc_str_fac
 
-def calc_ctr(fname, d, sub, film, Nfilm, c_film, Nelectrode_b=0, Nelectrode_t=0,
+def calc_ctr(fname, sub, film, Nfilm, c_film, Nelectrode_b=0, Nelectrode_t=0,
             c_electrode_b=0, c_electrode_t=0, scale=1e7, Nsub=1e4, comm='*'):
 
 	"""
@@ -66,7 +66,7 @@ def calc_ctr(fname, d, sub, film, Nfilm, c_film, Nelectrode_b=0, Nelectrode_t=0,
 	c_sub = param[sub][2]
 
 	# Read the data
-	xdata, ydata = read_data(fname, d, comments=comm)
+	xdata, ydata = read_data(fname, comments=comm)
 	q = tt2q(xdata)
 
 	# No electrodes

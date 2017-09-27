@@ -116,11 +116,11 @@ def asf(q):
 
 	return fmat
 
-def find_osc(fname, d, threshold=0.000006, m_distance=10, peak_side='r',
+def find_osc(fname, threshold=0.000006, m_distance=10, peak_side='r',
 			comm='*'):
 	"""TODO!"""
 
-	xdata, ydata = read_data(fname,d,comments=comm)
+	xdata, ydata = read_data(fname,comments=comm)
 	idxs = pk.indexes(ydata, thres=threshold, min_dist=m_distance)
 	film_peak = ydata[idxs].argsort()[::-1][1]
 	peaks = ydata[idxs].argsort()[::-1][2:]

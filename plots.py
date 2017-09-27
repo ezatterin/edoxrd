@@ -4,10 +4,9 @@ Set of functions to plot and compare CTRs and RSMs. Updated 7.11.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from pandas import read_csv
 from edoxrd.read import read_rsm_data
 
-def plt_rsm(sub, film, d, normalisation='sub', scale='log', coordinates='hkl'):
+def plt_rsm(sub, film, normalisation='sub', scale='log', coordinates='hkl'):
 
     """
     Plot the RSM of a substrate and film around a reflection on the same
@@ -43,8 +42,8 @@ def plt_rsm(sub, film, d, normalisation='sub', scale='log', coordinates='hkl'):
     """
 
     # Read data
-    h, l, i = read_rsm_data(sub, d, scale=scale, coordinates=coordinates)
-    H, L, I = read_rsm_data(film, d, scale=scale, coordinates=coordinates)
+    h, l, i = read_rsm_data(sub, scale=scale, coordinates=coordinates)
+    H, L, I = read_rsm_data(film, scale=scale, coordinates=coordinates)
 
     # plot
     if normalisation == 'sub':
@@ -68,13 +67,13 @@ def plt_rsm(sub, film, d, normalisation='sub', scale='log', coordinates='hkl'):
     elif coordinates == 'hkl':
         plt.xlabel('H'); plt.ylabel('L')
 
-def plt_prof(sample, d, H, L, scale='log'):
+def plt_prof(sample, H, L, scale='log'):
 
     """
     Plots profile of an RSM plot. TODO!
     """
 
-    h,l,I = read_rsm_data(sample, d, scale=scale)
+    h,l,I = read_rsm_data(sample, scale=scale)
 
     a = abs(l-L)
     b = abs(h-H)

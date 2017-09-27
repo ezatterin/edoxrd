@@ -54,7 +54,7 @@ def calc_str_fac(material,ttheta):
 
 	return F
 
-def calc_thickness(fname, datadir, threshold=1e-4, distance=20, side='r',
+def calc_thickness(fname, threshold=1e-4, distance=20, side='r',
 					comm='*'):
 
 	"""
@@ -65,8 +65,6 @@ def calc_thickness(fname, datadir, threshold=1e-4, distance=20, side='r',
 	----------
 	fname: string
 		The filename in .ras format.
-	datadir: string
-		The directory containing fname.
 	thres : float between [0., 1.]
 	    Normalized threshold. Only the peaks with amplitude higher than the
 	    threshold will be detected. Default: 1e-4
@@ -88,7 +86,7 @@ def calc_thickness(fname, datadir, threshold=1e-4, distance=20, side='r',
 
 	"""
 
-	xpeaks, ypeaks = find_osc(fname, datadir, threshold=threshold,
+	xpeaks, ypeaks = find_osc(fname, threshold=threshold,
 							  m_distance=distance, peak_side=side, comm=comm)
 	x = np.asarray([x for x in range(len(xpeaks))]) # oscillation peak order
 	y = 4 * np.pi * np.sin(np.deg2rad(xpeaks/2)) / 0.15406 # q_m's
@@ -98,7 +96,7 @@ def calc_thickness(fname, datadir, threshold=1e-4, distance=20, side='r',
 	fig.suptitle('The thickness of sample {0} is {1:.3f} nm with accuracy {2:.3f}'\
 	      .format(fname[:6], t, 1./x.max() ))
 	ax[0].scatter(xpeaks, ypeaks,c='red')
-	ax[0].plot(*read_data(fname, datadir, comments=comm)); ax[0].set_yscale('log')
+	ax[0].plot(*read_data(fname, comments=comm)); ax[0].set_yscale('log')
 	ax[1].scatter(x, y)
 	ax[1].plot(x, x*m+b, c='red', label='$q_m = {0:.3f}m + {1:.3f}$'.format(m, b))
 	ax[1].legend(); plt.show()
