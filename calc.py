@@ -54,8 +54,7 @@ def calc_str_fac(material,ttheta):
 
 	return F
 
-def calc_thickness(fname, threshold=1e-4, distance=20, side='r',
-					comm='*'):
+def calc_thickness(fname, threshold=1e-4, distance=20, side='r'):
 
 	"""
 	Calculate the thickness of a thin film on top of a substrate from its
@@ -87,7 +86,7 @@ def calc_thickness(fname, threshold=1e-4, distance=20, side='r',
 	"""
 
 	xpeaks, ypeaks = find_osc(fname, threshold=threshold,
-							  m_distance=distance, peak_side=side, comm=comm)
+							  m_distance=distance, peak_side=side)
 	x = np.asarray([x for x in range(len(xpeaks))]) # oscillation peak order
 	y = 4 * np.pi * np.sin(np.deg2rad(xpeaks/2)) / 0.15406 # q_m's
 	m, b = np.polyfit(x, y, 1) # linear fit
@@ -96,7 +95,7 @@ def calc_thickness(fname, threshold=1e-4, distance=20, side='r',
 	fig.suptitle('The thickness of sample {0} is {1:.3f} nm with accuracy {2:.3f}'\
 	      .format(fname[:6], t, 1./x.max() ))
 	ax[0].scatter(xpeaks, ypeaks,c='red')
-	ax[0].plot(*read_data(fname, comments=comm)); ax[0].set_yscale('log')
+	ax[0].plot(*read_data(fname)); ax[0].set_yscale('log')
 	ax[1].scatter(x, y)
 	ax[1].plot(x, x*m+b, c='red', label='$q_m = {0:.3f}m + {1:.3f}$'.format(m, b))
 	ax[1].legend(); plt.show()
