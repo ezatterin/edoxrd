@@ -5,7 +5,7 @@ Diffractometer.
 
 import numpy as np
 from pandas import read_csv
-def read_data(fname, comments='*'):
+def read_data(fname):
 	"""
 	Reads .ras Rigaku files.
 
@@ -32,9 +32,9 @@ def read_data(fname, comments='*'):
 
 	# Read it into an array
 	try:
-		data = np.genfromtxt(path, delimiter=" ", comments='*')
+		data = np.genfromtxt(path, delimiter=" ", comments='*', encoding='latin1')
 	except ValueError:
-		data = np.genfromtxt(path, delimiter=" ", comments='#')
+		data = np.genfromtxt(path, delimiter=" ", comments='#', encoding='latin1')
 
 	xdata = data[:,0] # 2theta in degrees
 	ydata = data[:,1] # Intensity
