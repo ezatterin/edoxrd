@@ -34,7 +34,7 @@ def mat_dict():
 
 	# Generate arrays of parameters and material names
 	param = np.genfromtxt(mat_param, usecols=(0,1,2))
-	names = list(np.genfromtxt(mat_param, usecols=3, dtype='|S5'))
+	names = list(np.genfromtxt(mat_param, usecols=3, dtype='U5'))
 
 	# Make a dictionary Mat_name:Parameters(a,b,c)
 	mat_param = {}
@@ -46,7 +46,7 @@ def mat_dict():
 
 	# Make a dicitonary Mat_name:Positions(x,y,z)
 	mat_pos = {}
-	for name, array in zip(mat_param.iterkeys(), pos):
+	for name, array in zip(mat_param.keys(), pos):
 	    mat_pos[name] = array
 
 	return mat_param, mat_pos
@@ -106,7 +106,7 @@ def asf(q):
 
 	# Calc the ASF for each atom and append in dictionary
 	fmat = {}
-	for name, m in atom_asf.iteritems(): #each m is the atom array
+	for name, m in atom_asf.items(): #each m is the atom array
 	    f = m[0] * np.exp(-m[1]*q/4/np.pi) +\
 	        m[2] * np.exp(-m[3]*q/4/np.pi) +\
 	        m[4] * np.exp(-m[5]*q/4/np.pi) +\

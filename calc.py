@@ -39,7 +39,7 @@ def calc_str_fac(material,ttheta):
 	    PTO = (['Pb', 'Ti'] + ['O']*3),
 	    MTO = (['Mn', 'Ti'] + ['O']*3),
 	    SRO = (['Sr', 'Ti'] + ['O']*3),
-	    KTO = (['K', 'Ta'] + ['O']*3),
+	    KTO = (['K', 'Ta']  + ['O']*3),
 	    DSO = (['Dy', 'Sc'] + ['O']*3)
 	        )
 

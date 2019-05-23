@@ -80,7 +80,7 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	"""
 
 	# read data as lines
-	d = np.genfromtxt(fname, dtype='str', delimiter='\n')
+	d = np.genfromtxt(fname, dtype='str', delimiter='\n', encoding='latin1')
 
 	# Wavelength
 	wave = [line for line in d if '*WAVE_LENGTH1' in line]
@@ -126,25 +126,22 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	# make ttheta, omega mesh
 	xx, yy = np.meshgrid(twotheta, omega, indexing='ij')
 
+    # to radiants
+	ttrad = np.deg2rad(xx)
+	omrad = np.deg2rad(yy)
 
 	if coordinates=='angles':
 		return xx, yy, I
 
 	elif coordinates=='qspace':
-		# to radiants
-		ttrad = np.deg2rad(xx)
-		omrad = np.deg2rad(yy)
+        
+		# to qx, qz
+		qx = (2*np.pi / lambdaone) * (np.cos(omrad) - np.cos(ttrad - omrad))
+		qz = (2*np.pi / lambdaone) * (np.sin(omrad) + np.sin(ttrad - omrad))
 
-		# to qx, qy
-		qx = lambdaone * (np.cos(omrad) - np.cos(ttrad - omrad))
-		qy = lambdaone * (np.sin(omrad) + np.sin(ttrad - omrad))
-
-		return qx, qy, I
+		return qx, qz, I
 
 	elif coordinates=='hkl':
-		# to radiants
-		ttrad = np.deg2rad(xx)
-		omrad = np.deg2rad(yy)
 
 		# to h, l
 		h = 3.988 / lambdaone * (np.cos(omrad) - np.cos(ttrad - omrad))
