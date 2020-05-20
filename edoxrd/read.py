@@ -62,7 +62,7 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 		Default is 'log'.
 	coordinates: string
 		Coordinate frame for Intensity mapping. Can be in 2theta, omega space
-		('angles') or reciprocal space ('hkl'). Default is 'hkl'.
+		('angles'), qspace ('qsapce'), or reciprocal space ('hkl'). Default is 'hkl'.
 
 	Returns
 	-------
@@ -134,7 +134,7 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 		return xx, yy, I
 
 	elif coordinates=='qspace':
-        
+
 		# to qx, qz
 		qx = (2*np.pi / lambdaone) * (np.cos(omrad) - np.cos(ttrad - omrad))
 		qz = (2*np.pi / lambdaone) * (np.sin(omrad) + np.sin(ttrad - omrad))
@@ -144,7 +144,7 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	elif coordinates=='hkl':
 
 		# to h, l
-		h = 3.988 / lambdaone * (np.cos(omrad) - np.cos(ttrad - omrad))
-		l = 3.988 / lambdaone * (np.sin(omrad) + np.sin(ttrad - omrad))
+		h = 3.989 / lambdaone * (np.cos(omrad) - np.cos(ttrad - omrad))
+		l = 3.989 / lambdaone * (np.sin(omrad) + np.sin(ttrad - omrad))
 
 		return h, l, I
