@@ -5,6 +5,7 @@ Diffractometer.
 
 import numpy as np
 from pandas import read_csv
+
 def read_data(fname):
 	"""
 	Reads .ras Rigaku files.
@@ -48,7 +49,7 @@ def read_data(fname):
 
 	return xdata, ydata
 
-def read_rsm_data(fname, scale='log', coordinates='hkl'):
+def read_rsm_data(fname, coordinates='qspace'):
 
 	"""
 	Read data from a Reciprocal Space Map, in .asc format.
@@ -57,25 +58,22 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	----------
 	fname: string
 		File path in .asc extension.
-	scale: string, optional
-		Scale of Intensity values, linear ('lin') or logarithmic ('log').
-		Default is 'log'.
 	coordinates: string
 		Coordinate frame for Intensity mapping. Can be in 2theta, omega space
-		('angles'), qspace ('qsapce'), or reciprocal space ('hkl'). Default is 'hkl'.
+		('angles'), or qspace ('qspace'). Default is 'qspace'.
 
 	Returns
 	-------
-	h: ndarray
-		Array of H values.
-	l: ndarray
-		Array of L values.
+	q1: ndarray
+		Array of q1 values.
+	q2: ndarray
+		Array of q2 values.
 	I: ndarray
-		Array of Intensity values scaled as specified.
+		Array of Intensity values.
 
 	Example
 	-------
-	>>> h,k,I = read_rsm_data('/home/e16019_01_-103_KTO_RSM_2-Theta.asc')
+	>>> qx, qz, I = read_rsm_data('/home/e16019_01_-103_KTO_RSM_2-Theta.asc')
 
 	"""
 
@@ -99,6 +97,7 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	twotheta_step = float(step[0].split()[2])
 	count = [line for line in d if '*COUNT' in line]
 	no_twotheta = int(count[1].split()[2])  # there is a 'counter' line
+
 	# 1D array of meas twotheta
 	twotheta = np.arange(twotheta_start, twotheta_stop, twotheta_step)
 
@@ -106,6 +105,7 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	sec_count = [line for line in d if '*SEC_COUNT' in line]
 	no_omega = int(sec_count[0].split()[2])
 	omega_lines = [line for line in d if '*OFFSET' in line]
+
 	# 1D array of meas omega
 	omega = np.zeros(len(omega_lines, ))
 	for index, line in enumerate(omega_lines):
@@ -116,12 +116,8 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	d2 = d2.values.flatten()  # 1D nparray of I
 	d2 = d2[np.logical_not(np.isnan(d2))]  # delete NaN values
 	d2 = d2.reshape(no_twotheta, no_omega, order='F')  # matlab order
-	d2 = d2 / speed # Normalise to counts per second
-	if scale=='log':
-		I = np.log(d2)
-	elif scale=='lin':
-		I = d2
-	I[I<0] = 0.0 # avoid log scale from making negative intensities
+
+	I = d2 / speed # Normalise to counts per second
 
 	# make ttheta, omega mesh
 	xx, yy = np.meshgrid(twotheta, omega, indexing='ij')
@@ -131,7 +127,7 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 	omrad = np.deg2rad(yy)
 
 	if coordinates=='angles':
-		return xx, yy, I
+		return yy, xx, I
 
 	elif coordinates=='qspace':
 
@@ -140,11 +136,3 @@ def read_rsm_data(fname, scale='log', coordinates='hkl'):
 		qz = (2*np.pi / lambdaone) * (np.sin(omrad) + np.sin(ttrad - omrad))
 
 		return qx, qz, I
-
-	elif coordinates=='hkl':
-
-		# to h, l
-		h = 3.989 / lambdaone * (np.cos(omrad) - np.cos(ttrad - omrad))
-		l = 3.989 / lambdaone * (np.sin(omrad) + np.sin(ttrad - omrad))
-
-		return h, l, I
